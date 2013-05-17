@@ -9,13 +9,47 @@
   <link href='http://fonts.googleapis.com/css?family=Cabin' rel='stylesheet' type='text/css'>
 </head>
 <body>
-  <input type="dropbox-chooser" name="selected-file" style="visibility: hidden;" data-multiselect=true/>
-
+  <div id="img-container" class="container">
+    <button id="launch-db" class="btn">Dropbox Me!</button>
+    <ul></ul>
+  </div>
 
   <script src="js/jquery-1.9.0.min.js"></script>
   <script src="js/bootstrap.js"></script>
   <script type="text/javascript">
-    
+    var images = [];
+
+    $('#launch-db').click(function(){
+      var options = {
+        linkType: "direct",
+        multiselect: true,
+        success: function(files) {
+          console.log(files);
+          showImages(files);
+          
+        },
+        cancel: function() {
+          console.log("You cancelled!")
+        }
+      }
+
+      Dropbox.choose(options);
+    });
+
+    var showImages = function(imgs){
+      for (var i = 0; i < imgs.length; i++) {
+        images.push(imgs[i].link);
+        $('#img-container ul').append('<li><img src="' + imgs[i].link + '"/></li>');
+      };
+      $('#img-container ul li').on("click", function(){
+        if($(this).hasClass("large")) {
+          $(this).removeClass("large");
+        } else {
+          $('#img-container ul li').removeClass("large");
+          $(this).addClass('large');
+        }
+      });
+    }
 
   </script>
   <script type="text/javascript" src="https://www.dropbox.com/static/api/1/dropins.js" id="dropboxjs" data-app-key="ljg178x9g89gibj"></script>
