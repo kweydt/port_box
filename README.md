@@ -1,2 +1,2 @@
-port_box
+Quickly assemble a portfolio using Dropbox
 ========
