@@ -6,50 +6,148 @@
   <link href="css/styles.css" rel="stylesheet" media="screen">
   <link href="css/bootstrap.css" rel="stylesheet" media="screen">
   <link href="css/bootstrap-responsive.css" rel="stylesheet" media="screen">
-  <link href='http://fonts.googleapis.com/css?family=Cabin' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Cabin:400,700' rel='stylesheet' type='text/css'>
 </head>
 <body>
-  <div id="img-container" class="container">
-    <button id="launch-db" class="btn">Dropbox Me!</button>
-    <ul></ul>
+  <img src="img/bg-2.png" class="bg"/>
+  <div id="portbox-container" class="container">
   </div>
+  <div id="overlay-screen">
+    <div id="portbox-intro">
+      <img id="logo" src="img/portbox-268x49.png"/>
+<!--       <h1>Create a quick portfolio presentation from your Dropbox</h1> -->
+      <div id="launch-db"><img id="db-logo" src="img/db-logo-44x39.png"/><span>Select some images</span></div>
+    </div>
+  </div>
+
 
   <script src="js/jquery-1.9.0.min.js"></script>
   <script src="js/bootstrap.js"></script>
   <script type="text/javascript">
     var images = [];
+    var large_shown = false;
+    var times_called = 0;
+    var cur_img = 0;
+
+    $(document).ready(function(){
+      $('#portbox-container').append('<ul></ul><div class="portbox-large"><div class="left-arrow"><</div><div class="right-arrow">></div><div class="close-btn">Close</div><img/></div>');
+
+      $('.portbox-large').hide();
+
+      bindEvents();
+    });
+
+    var bindEvents = function(){
+      $('.portbox-large img').click(function(){
+        hideImage();
+      });
+
+      $('.left-arrow').click(function(){
+        prevImage();
+      });
+
+      $('.right-arrow').click(function(){
+        nextImage();
+      });
+
+      $('.close-btn').click(function(){
+        hideImage();
+      });
+    }
 
     $('#launch-db').click(function(){
       var options = {
         linkType: "direct",
         multiselect: true,
         success: function(files) {
-          console.log(files);
-          showImages(files);
-          
+          loadImages(files);
         },
         cancel: function() {
           console.log("You cancelled!")
         }
       }
-
       Dropbox.choose(options);
     });
 
-    var showImages = function(imgs){
+
+    var loadImages = function(imgs){
+      times_called++;
+
       for (var i = 0; i < imgs.length; i++) {
-        images.push(imgs[i].link);
-        $('#img-container ul').append('<li><img src="' + imgs[i].link + '"/></li>');
-      };
-      $('#img-container ul li').on("click", function(){
-        if($(this).hasClass("large")) {
-          $(this).removeClass("large");
-        } else {
-          $('#img-container ul li').removeClass("large");
-          $(this).addClass('large');
+        if(isImage(imgs[i].link)){
+          images.push(imgs[i].link);
+          $('#portbox-container ul').append('<li class="loaded' + times_called + '"><img src="' + imgs[i].link + '"/></li>');
         }
+      };
+
+      $('#portbox-container ul li.loaded' + times_called).on("click", function(){
+        cur_img = $(this).index("li");
+        showImage(cur_img);
+        large_shown = true;
       });
+
+      $('#portbox-container').show();
     }
+
+
+    var isImage = function(img_link){
+      switch(img_link.substring(img_link.lastIndexOf('.') + 1).toLowerCase()){
+        case 'gif': case 'jpg': case 'png':
+            return true;
+            break;
+        default:
+            return false;
+            break;
+      }
+    }
+
+
+    var showImage = function(ind){
+      var img_src = $('#portbox-container ul li').eq(ind).find("img").attr("src");
+      $('.portbox-large img').attr("src", img_src);
+      $('#portbox-container .portbox-large').fadeIn();
+    }
+
+
+    var hideImage = function(){
+      $(".portbox-large").fadeOut();
+    }
+
+
+    var nextImage = function(){
+      cur_img += 1;
+      if (cur_img == ($('#portbox-container ul li').size())) {
+        cur_img = 0;
+      }
+      showImage(cur_img);
+    }
+
+
+    var prevImage = function(){
+      cur_img -= 1;
+      if (cur_img < 0) {
+        cur_img = ($('#portbox-container ul li').size()) - 1;
+      }
+      showImage(cur_img);
+    }
+
+
+    $(document).keydown(function(e){
+      if (large_shown == true) {
+        if (e.keyCode == 37) {
+          //left key 
+          prevImage();
+          return false;
+        } else if (e.keyCode == 39) {
+          // right key
+          nextImage();
+        } else if (e.keyCode == 27) {
+          // esc key
+          hideImage();
+          large_shown = false;
+        }
+      }
+    });
 
   </script>
   <script type="text/javascript" src="https://www.dropbox.com/static/api/1/dropins.js" id="dropboxjs" data-app-key="ljg178x9g89gibj"></script>
