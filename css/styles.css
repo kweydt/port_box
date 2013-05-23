@@ -1,5 +1,23 @@
 body, ul, li, p, a, div {margin: 0; padding: 0; list-style: none; font-family: "Cabin", Helvetica, Arial, Sans-serif;}
 
+html {
+  height: 100%;
+}
+body {
+  height: 100%;
+  margin: 0;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background: #333; /* Old browsers */
+  background: -moz-linear-gradient(top,  #333 0%, #666 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#333), color-stop(100%,#666)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  #333 0%,#666 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  #333 0%,#666 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  #333 0%,#666 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  #333 0%,#666 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#333', endColorstr='#666',GradientType=0 ); /* IE6-9 */
+}
+
 .bg {
   min-height: 100%;
   min-width: 1024px;
@@ -11,10 +29,17 @@ body, ul, li, p, a, div {margin: 0; padding: 0; list-style: none; font-family: "
 }
 
 #portbox-container {
+  position: relative;
   text-align: center;
-  margin-top: 50px;
   width: 100%;
   display: none;
+  background: #333;
+}
+#portbox-container .nav {
+  padding: 10px 0 0 0;
+}
+#portbox-container .nav img {
+  width: 100px;
 }
 #portbox-container ul {
   max-width: 1446px;
@@ -31,16 +56,18 @@ body, ul, li, p, a, div {margin: 0; padding: 0; list-style: none; font-family: "
   padding: 20px;
   width: 400px;
   height: 400px;
+  background: #888;
+  border: 1px solid #777;
 /*  transition: height, 2s;
   -webkit-transition: height 2s;
   -moz-transition: height: 2s;*/
 }
-#portbox-container ul li img, #portbox-container .portbox-large img {
+#portbox-container ul li img {
   max-width: 400px;
   max-height: 400px;
   background: white;
-  padding: 10px;
   cursor: pointer;
+  border: 1px solid #777;
 }
 
 #portbox-container .portbox-large {
@@ -53,9 +80,15 @@ body, ul, li, p, a, div {margin: 0; padding: 0; list-style: none; font-family: "
   margin: 0;
 }
 
+#portbox-container .portbox-large-wrapper {
+  margin: 0 auto;
+  padding: 10px 0 0;
+  overflow: hidden;
+  width: 500px;
+}
+
 .left-arrow, .right-arrow {
-  position: absolute;
-  top: 50%;
+  float: left;
   font-size: 72px;
   font-weight: bold;
   color: white;
@@ -63,11 +96,11 @@ body, ul, li, p, a, div {margin: 0; padding: 0; list-style: none; font-family: "
 }
 
 .left-arrow {
-  left: 5%;
+
 }
 
 .right-arrow {
-  right: 5%;
+  margin-left: 20px;
 }
 
 .close-btn {
@@ -76,12 +109,15 @@ body, ul, li, p, a, div {margin: 0; padding: 0; list-style: none; font-family: "
   font-size: 18px;
   border-radius: 5px;
   padding: 10px;
-  margin: 0 auto;
+  float: right;
 }
 
 #portbox-container .portbox-large img {
   max-width: 90%;
   max-height: 90%;
+  padding: 10px;
+  background: white;
+  cursor: pointer;
 }
 
 #portbox-intro {
@@ -121,8 +157,8 @@ body, ul, li, p, a, div {margin: 0; padding: 0; list-style: none; font-family: "
 
 #portbox-intro #launch-db {
   margin: 20px auto 0;
-  width: 290px;
-  height: 70px;
+  width: 230px;
+  height: 50px;
   border: 4px solid #aaaaaa;
   border-radius: 5px;
   cursor: pointer;
@@ -149,12 +185,13 @@ body, ul, li, p, a, div {margin: 0; padding: 0; list-style: none; font-family: "
 
 #portbox-intro #launch-db #db-logo {
   float: left;
-  margin: 17px 0 0 15px;
+  margin: 12px 0 0 20px;
 }
 
 #portbox-intro #launch-db span {
   float: left;
   color: white;
-  font-size: 24px;
-  margin: 27px 0 0 10px;
+  font-size: 16px;
+  margin: 15px 0 0 13px;
+  text-shadow: 0px 1px 1px rgba(0,0,0,0.4);
 }

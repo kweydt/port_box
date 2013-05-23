@@ -9,15 +9,16 @@
   <link href='http://fonts.googleapis.com/css?family=Cabin:400,700' rel='stylesheet' type='text/css'>
 </head>
 <body>
-  <img src="img/bg-2.png" class="bg"/>
+<!--   <img src="img/bg-2.png" class="bg"/> -->
   <div id="portbox-container" class="container">
-  </div>
-  <div id="overlay-screen">
-    <div id="portbox-intro">
+    <div class="nav">
       <img id="logo" src="img/portbox-268x49.png"/>
-<!--       <h1>Create a quick portfolio presentation from your Dropbox</h1> -->
-      <div id="launch-db"><img id="db-logo" src="img/db-logo-44x39.png"/><span>Select some images</span></div>
     </div>
+  </div>
+  <div id="portbox-intro">
+    <img id="logo" src="img/portbox-268x49.png"/>
+<!--       <h1>Create a quick portfolio presentation from your Dropbox</h1> -->
+    <div id="launch-db"><img id="db-logo" src="img/db-logo-33x29.png"/><span>Select some images</span></div>
   </div>
 
 
@@ -30,7 +31,7 @@
     var cur_img = 0;
 
     $(document).ready(function(){
-      $('#portbox-container').append('<ul></ul><div class="portbox-large"><div class="left-arrow"><</div><div class="right-arrow">></div><div class="close-btn">Close</div><img/></div>');
+      $('#portbox-container').append('<ul></ul><div class="portbox-large"><div class="portbox-large-wrapper"><div class="left-arrow"><</div><div class="right-arrow">></div><div class="close-btn">x</div></div><img/></div>');
 
       $('.portbox-large').hide();
 
@@ -86,6 +87,7 @@
         large_shown = true;
       });
 
+      $('#portbox-intro').hide();
       $('#portbox-container').show();
     }
 
@@ -103,9 +105,16 @@
 
 
     var showImage = function(ind){
+      $('#portbox-container .portbox-large').show();
+      $('#portbox-container .portbox-large img').hide();
       var img_src = $('#portbox-container ul li').eq(ind).find("img").attr("src");
       $('.portbox-large img').attr("src", img_src);
-      $('#portbox-container .portbox-large').fadeIn();
+      $('#portbox-container .portbox-large img').fadeIn(function(){
+        var img_width = $('.portbox-large img').width();
+        $('.portbox-large-wrapper').animate({
+          width: img_width
+        });
+      });
     }
 
 
