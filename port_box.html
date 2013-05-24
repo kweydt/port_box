@@ -14,6 +14,7 @@
     <div class="nav">
       <img id="logo" src="img/portbox-268x49.png"/>
     </div>
+    <div id="portbox-preload" class="hidden"></div>
   </div>
   <div id="portbox-intro">
     <img id="logo" src="img/portbox-268x49.png"/>
@@ -23,6 +24,7 @@
 
 
   <script src="js/jquery-1.9.0.min.js"></script>
+
   <script src="js/bootstrap.js"></script>
   <script type="text/javascript">
     var images = [];
@@ -77,7 +79,8 @@
       for (var i = 0; i < imgs.length; i++) {
         if(isImage(imgs[i].link)){
           images.push(imgs[i].link);
-          $('#portbox-container ul').append('<li class="loaded' + times_called + '"><img src="' + imgs[i].link + '"/></li>');
+          $('#portbox-container ul').append('<li class="loaded' + times_called + '"></li>');
+          $('#portbox-container ul li:last-child').css("background-image", "url('" + imgs[i].link + "')");
         }
       };
 
@@ -107,14 +110,13 @@
     var showImage = function(ind){
       $('#portbox-container .portbox-large').show();
       $('#portbox-container .portbox-large img').hide();
-      var img_src = $('#portbox-container ul li').eq(ind).find("img").attr("src");
+      var img_src = $('#portbox-container ul li').eq(ind).css("background-image");
+      img_src = img_src.substring(4).replace(')','');
+      // var toRemove = ')';
+      // var img_src = img_src.replace(toRemove,'');
+      console.log(img_src);
       $('.portbox-large img').attr("src", img_src);
-      $('#portbox-container .portbox-large img').fadeIn(function(){
-        var img_width = $('.portbox-large img').width();
-        $('.portbox-large-wrapper').animate({
-          width: img_width
-        });
-      });
+      $('#portbox-container .portbox-large img').fadeIn();
     }
 
 
