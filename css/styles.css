@@ -1,10 +1,10 @@
 body, ul, li, p, a, div {margin: 0; padding: 0; list-style: none; font-family: "Cabin", Helvetica, Arial, Sans-serif;}
 
 html {
-  height: 100%;
+  min-height: 100%;
 }
 body {
-  height: 100%;
+/*  height: 100%;*/
   margin: 0;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -33,7 +33,6 @@ body {
   text-align: center;
   width: 100%;
   display: none;
-  background: #333;
 }
 #portbox-container .nav {
   padding: 10px 0 0 0;
@@ -54,10 +53,12 @@ body {
   margin: 20px;
   padding: 20px;
   width: 27%;
+  min-width: 27%;
   height: 400px;
   background-size: 100%;
   background-repeat: no-repeat;
   background-position-y: center;
+  background-color: white;
   cursor: pointer;
 /*  transition: height, 2s;
   -webkit-transition: height 2s;
@@ -90,11 +91,12 @@ body {
 
 .left-arrow, .right-arrow {
   float: left;
-  font-size: 72px;
+  font-size: 56px;
   font-weight: bold;
-  color: white;
+  color: #ffffff;
   cursor: pointer;
   height: 40px;
+  padding-top: 5px;
 }
 
 .left-arrow {
@@ -107,10 +109,13 @@ body {
 
 .close-btn {
   cursor: pointer;
-  color: white;
-  font-size: 48px;
+  color: #333;
+  font-size: 28px;
   border-radius: 5px;
   float: right;
+  background: white;
+  padding: 5px;
+  font-weight: 700;
 }
 
 #portbox-container .portbox-large img {
